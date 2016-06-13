@@ -5,12 +5,13 @@ process.stdout.write('prompt > ');
 process.stdin.on('data', function (data) {
 
   var cmd = data.toString().trim();
+  var args = cmd.split(' ');
 
-  commands[cmd]();
+  commands[args[0]].apply(null, args);
 
-  // setTimeout(function() {
-  //   process.stdout.write('\nprompt > ');
-  // }, 0);
+  setTimeout(function(){ process.stdout.write('\nprompt > ')}, 1000);
+
+
 });
 
 
