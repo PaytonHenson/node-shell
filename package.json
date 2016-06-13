@@ -1,0 +1,23 @@
+{
+  "name": "paytonalec",
+  "version": "1.0.0",
+  "description": "bash replica",
+  "main": "bash.js",
+  "dependencies": {
+    "request": "^2.72.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaytonHenson/node-shell.git"
+  },
+  "author": "paytonalec",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaytonHenson/node-shell/issues"
+  },
+  "homepage": "https://github.com/PaytonHenson/node-shell#readme"
+}

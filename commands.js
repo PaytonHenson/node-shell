@@ -1,5 +1,7 @@
 var fs = require('fs');
 
+var request = require('request');
+
 function pwd () {
   process.stdout.write(process.cwd());
   process.stdout.write('\nprompt > ');
@@ -11,33 +13,41 @@ function date () {
 }
 
 function ls () {
+
+  var done = arguments[arguments.length - 1];
+
+  var output = '';
+
   fs.readdir('.', function (err, files) {
     if (err) throw err;
     files.forEach(function (file) {
-      process.stdout.write(file.toString() + '\n');
+      output += file.toString() + '\n';
     });
-    // process.stdout.write('\nprompt > ');
+    done(output);
   });
 }
 
-function echo(){
+function echo (){
   var args = [].slice.call(arguments).slice(1);
   process.stdout.write(args.join(' '));
   process.stdout.write('\nprompt > ');
 }
 
-function cat(){
-  var args = arguments.length;
-  for (var i = 1; i < arguments.length; i++){
+function cat (){
+  var done = arguments[arguments.length - 1];
+
+  var output = '';
+
+  for (var i = 1; i < arguments.length - 1; i++){
   fs.readFile(arguments[i], function(err, data){
     if (err) throw err;
-    process.stdout.write(data.toString());
-    // if (i == args - 1){
-    //   process.stdout.write('\nprompt > ');
-    // }
+
+    output += data.toString();
+
+    done(output);
+
   });
   }
-  setTimeout(function(){ process.stdout.write('\nprompt > ')}, 1000);
 }
 
 function head(){
@@ -48,7 +58,7 @@ function head(){
     for (var i = 0; i < 10; i++){
       process.stdout.write(heads[i] + '\n');
     }
-    // process.stdout.write('\nprompt > ');
+    process.stdout.write('\nprompt > ');
   })
 }
 
@@ -74,7 +84,16 @@ function sort(){
   });
 }
 
+function curl () {
+  request(arguments[1], function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log(body);
+    }
+  });
+}
+
 module.exports = {
+  curl: curl,
   sort: sort,
   tail: tail,
   head: head,
